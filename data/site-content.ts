@@ -195,6 +195,10 @@ export const projects: Project[] = [
       {
         label: "CSR Communication in Disaster Relief (PURE report)",
         href: "/research/pure-csr-communication-earthquake.pdf"
+      },
+      {
+        label: "Earthquake Needs and News Coverage (PURE report)",
+        href: "/research/pure-earthquake-needs-news-coverage.pdf"
       }
     ]
   },
