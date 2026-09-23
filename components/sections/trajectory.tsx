@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { FileText, MapPin } from "lucide-react";
 import { Reveal } from "@/components/motion";
 import { SectionFrame, SectionIntro } from "@/components/section-frame";
 import { achievements, education } from "@/data/site-content";
@@ -50,6 +50,15 @@ export function Trajectory() {
                 </p>
                 <p className="mt-5 font-serif text-4xl leading-none text-white">{item.detail}</p>
                 <p className="mt-4 text-sm leading-7 text-stone-300/84">{item.note}</p>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="mt-5 inline-flex items-center gap-2 text-sm text-stone-300/84 underline decoration-white/16 underline-offset-4 transition hover:text-white hover:decoration-rose-300/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+                  >
+                    <FileText size={14} aria-hidden="true" className="shrink-0 text-rose-300/72" />
+                    View certificate
+                  </a>
+                ) : null}
               </SpotlightPanel>
             </Reveal>
           ))}

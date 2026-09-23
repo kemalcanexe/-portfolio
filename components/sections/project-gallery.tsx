@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import { Reveal } from "@/components/motion";
 import { SectionFrame, SectionIntro } from "@/components/section-frame";
 import { projects } from "@/data/site-content";
@@ -41,13 +41,15 @@ export function ProjectGallery() {
                         {project.title}
                       </h3>
                     </div>
-                    <a
-                      href={project.link}
-                      aria-label={`Open link for ${project.title}`}
-                      className="rounded-[8px] border border-white/10 bg-white/[0.05] p-2 text-stone-300 transition hover:border-rose-300/28 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-                    >
-                      <ExternalLink size={16} />
-                    </a>
+                    {project.link === "#" ? null : (
+                      <a
+                        href={project.link}
+                        aria-label={`Open link for ${project.title}`}
+                        className="rounded-[8px] border border-white/10 bg-white/[0.05] p-2 text-stone-300 transition hover:border-rose-300/28 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+                      >
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
                   </div>
 
                   {index < 2 ? (
@@ -83,6 +85,23 @@ export function ProjectGallery() {
                   <p className="mt-6 text-sm leading-7 text-stone-300/84">{project.summary}</p>
                   <p className="mt-4 text-sm leading-7 text-stone-400/88">{project.contribution}</p>
                   <p className="mt-5 text-sm leading-7 text-champagne-200/86">{project.matters}</p>
+
+                  {project.documents ? (
+                    <div className="mt-6 flex flex-col gap-2 border-t border-white/8 pt-5">
+                      {project.documents.map((doc) => (
+                        <a
+                          key={doc.href}
+                          href={doc.href}
+                          className="group/doc inline-flex items-center gap-2 text-sm leading-6 text-stone-300/84 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+                        >
+                          <FileText size={14} aria-hidden="true" className="shrink-0 text-rose-300/72" />
+                          <span className="underline decoration-white/16 underline-offset-4 transition group-hover/doc:decoration-rose-300/60">
+                            {doc.label}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
 
                   <div className="mt-auto flex flex-wrap gap-2 pt-6">
                     {project.tags.map((tag) => (

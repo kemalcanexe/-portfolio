@@ -134,7 +134,18 @@ export const experiences = [
   }
 ];
 
-export const projects = [
+type Project = {
+  title: string;
+  theme: string;
+  summary: string;
+  contribution: string;
+  matters: string;
+  tags: string[];
+  link: string;
+  documents?: { label: string; href: string }[];
+};
+
+export const projects: Project[] = [
   {
     title: "Resource-Efficient AI Action Orchestration Platform",
     theme: "Industrial Edge AI",
@@ -157,7 +168,13 @@ export const projects = [
     matters:
       "Good ranking quietly shapes trust, discovery, and conversion. It is one of the most consequential invisible systems in digital products.",
     tags: ["BM25", "NDCG@k", "CR@k", "Ranking", "Python"],
-    link: "#"
+    link: "/papers/icmla2026-rank-fusion.pdf",
+    documents: [
+      {
+        label: "Beyond Skewness: Rank Fusion (ICMLA 2026)",
+        href: "/papers/icmla2026-rank-fusion.pdf"
+      }
+    ]
   },
   {
     title: "Disaster Relief Logistics Research",
@@ -169,7 +186,17 @@ export const projects = [
     matters:
       "It sits at the intersection of operational complexity and human urgency, where better systems can have real weight.",
     tags: ["Research", "Optimization", "Earthquake Data", "Logistics"],
-    link: "#"
+    link: "/research/pure-brand-responses-earthquake.pdf",
+    documents: [
+      {
+        label: "Brand Responses to the Earthquake (PURE report)",
+        href: "/research/pure-brand-responses-earthquake.pdf"
+      },
+      {
+        label: "CSR Communication in Disaster Relief (PURE report)",
+        href: "/research/pure-csr-communication-earthquake.pdf"
+      }
+    ]
   },
   {
     title: "Full-Stack E-Commerce Platform",
@@ -236,7 +263,14 @@ export const skillGroups = [
   }
 ];
 
-export const achievements = [
+type Achievement = {
+  title: string;
+  detail: string;
+  note: string;
+  href?: string;
+};
+
+export const achievements: Achievement[] = [
   {
     title: "Promise for Tomorrow Program",
     detail: "First Place",
@@ -245,7 +279,8 @@ export const achievements = [
   {
     title: "IELTS",
     detail: "8.5 / 9.0",
-    note: "A strong communication profile for international collaboration and opportunity."
+    note: "A strong communication profile for international collaboration and opportunity.",
+    href: "/docs/ielts-2025.pdf"
   },
   {
     title: "Academic Foundation",
