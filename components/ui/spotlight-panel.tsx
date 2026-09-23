@@ -6,7 +6,15 @@ import { cn } from "@/lib/utils";
 
 type PanelTone = "rose" | "lilac" | "champagne";
 
-type SpotlightPanelProps = React.HTMLAttributes<HTMLDivElement> & {
+type ConflictingMotionHandlers =
+  | "onAnimationStart"
+  | "onAnimationEnd"
+  | "onAnimationIteration"
+  | "onDrag"
+  | "onDragStart"
+  | "onDragEnd";
+
+type SpotlightPanelProps = Omit<React.HTMLAttributes<HTMLDivElement>, ConflictingMotionHandlers> & {
   tone?: PanelTone;
   interactive?: boolean;
 };
