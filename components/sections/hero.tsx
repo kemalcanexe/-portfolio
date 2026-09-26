@@ -6,6 +6,7 @@ import { profile } from "@/content/cv";
 import { gsap, prefersReducedMotion, SplitText, useGSAP } from "@/components/motion/engine";
 import { HeroSearchDemo } from "@/components/search/hero-search-demo";
 import { openPalette } from "@/components/search/palette-store";
+import { whenIntroDone } from "@/components/intro/intro-store";
 
 const LiquidEther = dynamic(() => import("@/components/fx/liquid-ether"), { ssr: false });
 
@@ -24,14 +25,16 @@ export function Hero() {
       const grad = q(".hero-grad")[0]?.querySelectorAll<HTMLElement>(".hero-grad *:not(:has(*))") ?? [];
       const mix = gsap.utils.interpolate("#C6B5FF", "#FF6FD8");
       grad.forEach((c, i) => (c.style.color = mix(i / Math.max(grad.length - 1, 1))));
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const tl = gsap.timeline({ paused: true, defaults: { ease: "expo.out" } });
+      whenIntroDone(() => tl.play());
       tl.from(q(".hero-veil"), { opacity: 1, duration: 1.6, ease: "power2.inOut" }, 0)
         .from(name.chars, { yPercent: 115, rotate: 10, duration: 1.4, stagger: 0.035 }, 0.2)
         .from(q(".hero-in"), { y: 28, opacity: 0, duration: 1.1, stagger: 0.08 }, 0.8);
 
       // Field names cycle in place.
       const words = q(".hero-field");
-      const cycle = gsap.timeline({ repeat: -1, delay: 1.6 });
+      const cycle = gsap.timeline({ repeat: -1, delay: 1.6, paused: true });
+      whenIntroDone(() => cycle.play());
       words.forEach((w, i) => {
         const next = words[(i + 1) % words.length];
         cycle
@@ -86,7 +89,7 @@ export function Hero() {
         </div>
 
         <div className="hero-name-wrap">
-          <h1 className="hero-name split-room display text-[clamp(4.2rem,15vw,15.5rem)] leading-[0.86] tracking-[-0.04em]">
+          <h1 className="hero-name split-room kinetic display text-[clamp(4.2rem,15vw,15.5rem)] leading-[0.86] tracking-[-0.04em]">
             Neşenaz
             <br />
             <span className="hero-grad text-violet-soft">Yalçın</span>

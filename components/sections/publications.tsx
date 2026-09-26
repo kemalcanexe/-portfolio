@@ -4,10 +4,10 @@ import type React from "react";
 import { entries } from "@/content/cv";
 import { Heading, Rise, useGlow } from "@/components/motion/engine";
 import { EdgeViz } from "@/components/viz/edge-viz";
-import { FusionViz } from "@/components/viz/fusion-viz";
+import { FusionPlayground } from "@/components/viz/fusion-playground";
 
 const pubs = entries.filter((e) => e.section === "publications");
-const VIZ: Record<string, React.ReactNode> = { "icmla-2026": <FusionViz />, "siu-2026": <EdgeViz /> };
+const VIZ: Record<string, React.ReactNode> = { "icmla-2026": <FusionPlayground />, "siu-2026": <EdgeViz /> };
 
 function Authors({ authors }: { authors: string }) {
   const own = "N. Yalçın";

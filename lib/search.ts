@@ -31,6 +31,10 @@ export type Hit = {
   parts: Record<Retriever, number>;
 };
 
+// How each retriever's confidence is estimated before weighting.
+// "equal" skips confidence and gives every retriever with hits the same weight.
+export type Estimator = "hybrid" | "topk" | "entropy" | "equal";
+
 export type SearchResult = {
   hits: Hit[];
   stats: Record<Retriever, RetrieverStats>;
@@ -144,7 +148,7 @@ export class HybridIndex {
     });
   }
 
-  search(query: string): SearchResult {
+  search(query: string, estimator: Estimator = "hybrid"): SearchResult {
     const terms = [...new Set(tokenize(query))];
     const raw: Record<Retriever, number[]> = {
       bm25: this.bm25(terms),
@@ -158,7 +162,7 @@ export class HybridIndex {
       normalized[r] = normalize(raw[r]);
       stats[r] = {
         hits: raw[r].filter((s) => s > 0).length,
-        confidence: confidence(normalized[r]),
+        confidence: confidence(normalized[r], estimator),
         weight: 0
       };
     }
@@ -190,11 +194,15 @@ function normalize(scores: number[]): number[] {
   return max ? scores.map((s) => s / max) : scores;
 }
 
-// Hybrid of Top-K Gap and (1 - normalized entropy) over the top-K scores.
-// A peaked distribution means the retriever is sure; a flat one means it is guessing.
-function confidence(scores: number[]): number {
+// Confidence from the shape of the top-K normalized scores. A peaked
+// distribution means the retriever is sure; a flat one means it is guessing.
+//   topk:    gap between the best and the K-th score
+//   entropy: 1 - normalized entropy of the top-K scores
+//   hybrid:  mean of the two
+function confidence(scores: number[], estimator: Estimator = "hybrid"): number {
   const top = scores.filter((s) => s > 0).sort((a, b) => b - a).slice(0, TOP_K);
   if (!top.length) return 0;
+  if (estimator === "equal") return 1;
   if (top.length === 1) return 1;
 
   const gap = top[0] - top[top.length - 1];
@@ -206,5 +214,6 @@ function confidence(scores: number[]): number {
   }, 0);
   const peakedness = 1 - entropy / Math.log(top.length);
 
-  return Math.max(0.05, (gap + peakedness) / 2);
+  const value = estimator === "topk" ? gap : estimator === "entropy" ? peakedness : (gap + peakedness) / 2;
+  return Math.max(0.05, value);
 }

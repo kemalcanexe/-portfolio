@@ -46,9 +46,18 @@ html.lenis body {
     font-variation-settings: "wdth" 96, "opsz" 96;
     letter-spacing: -0.025em;
   }
+  .kinetic {
+    font-variation-settings: "wdth" var(--kin-w, 96), "opsz" 96;
+    transform: skewX(var(--kin-skew, 0deg));
+    transform-origin: left bottom;
+  }
   .kicker {
     @apply font-mono text-xs text-violet-soft;
   }
+}
+
+html.intro-seen .preloader {
+  display: none;
 }
 
 /* SplitText masks clip at the line box; give descenders and cedillas room. */

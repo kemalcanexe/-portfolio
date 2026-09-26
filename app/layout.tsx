@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description: profile.summary,
   authors: [{ name: profile.name }],
   openGraph: { title: profile.name, description: profile.summary, type: "website", url: "https://nesenaz.com" },
+  twitter: { card: "summary_large_image", title: profile.name, description: profile.summary },
   icons: { icon: "/favicon.svg" }
 };
 
@@ -26,7 +27,15 @@ export const viewport: Viewport = { themeColor: "#07050D", colorScheme: "dark" }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Mark returning visitors before first paint so the preloader never flashes. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("ny-intro-seen")&&!/[?&]intro\b/.test(location.search))document.documentElement.classList.add("intro-seen")}catch(e){}`
+          }}
+        />
+      </head>
       <body className="bg-night font-sans text-fog antialiased">{children}</body>
     </html>
   );

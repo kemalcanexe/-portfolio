@@ -1,4 +1,8 @@
 import { CommandPalette } from "@/components/search/command-palette";
+import { Preloader } from "@/components/intro/preloader";
+import { ToneShift } from "@/components/motion/tone-shift";
+import { UniverseLazy } from "@/components/sections/universe-lazy";
+import { StructuredData } from "@/components/structured-data";
 import { SmoothScroll } from "@/components/motion/engine";
 import { Awards } from "@/components/sections/awards";
 import { Contact } from "@/components/sections/contact";
@@ -18,6 +22,9 @@ export default function Home() {
   return (
     <div className="grain">
       <SmoothScroll />
+      <Preloader />
+      <ToneShift />
+      <StructuredData />
       <Nav />
       <CommandPalette />
       <main>
@@ -25,7 +32,7 @@ export default function Home() {
         <Marquee speed={50} className="border-y border-white/[0.06] py-6">
           {FIELDS.map((f) => (
             <span key={f} className="flex items-center">
-              <span className="display px-8 text-5xl text-transparent [-webkit-text-stroke:1px_rgba(238,234,247,0.35)] sm:text-7xl">
+              <span className="kinetic display px-8 text-5xl text-transparent [-webkit-text-stroke:1px_rgba(238,234,247,0.35)] sm:text-7xl">
                 {f}
               </span>
               <span className="text-3xl text-violet">✦</span>
@@ -34,6 +41,7 @@ export default function Home() {
         </Marquee>
         <Stats />
         <Publications />
+        <UniverseLazy />
         <Experience />
         <Projects />
         <Education />

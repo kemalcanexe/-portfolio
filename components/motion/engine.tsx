@@ -24,9 +24,29 @@ export function SmoothScroll() {
     if (prefersReducedMotion()) return;
     lenis = new Lenis({ lerp: 0.09, anchors: { offset: -80 } });
     lenis.on("scroll", ScrollTrigger.update);
-    const tick = (time: number) => lenis?.raf(time * 1000);
+    // Kinetic type: fast scrolling narrows .kinetic headings (Bricolage's wdth axis)
+    // and leans them; they spring back when scrolling stops.
+    const root = document.documentElement.style;
+    let width = 96;
+    let skew = 0;
+    const tick = (time: number) => {
+      lenis?.raf(time * 1000);
+      const v = lenis?.velocity ?? 0;
+      const targetW = 96 - Math.min(Math.abs(v) * 0.9, 21);
+      const targetS = Math.max(-8, Math.min(8, -v * 0.25));
+      const nextW = width + (targetW - width) * 0.12;
+      const nextS = skew + (targetS - skew) * 0.12;
+      if (Math.abs(nextW - width) > 0.02 || Math.abs(nextS - skew) > 0.01) {
+        width = nextW;
+        skew = nextS;
+        root.setProperty("--kin-w", width.toFixed(2));
+        root.setProperty("--kin-skew", `${skew.toFixed(2)}deg`);
+      }
+    };
     gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    // Keep GSAP's lag smoothing: WebGL start-up can block a frame for a while,
+    // and timelines should not leap ahead when it does.
+    gsap.ticker.lagSmoothing(250, 33);
     return () => {
       gsap.ticker.remove(tick);
       lenis?.destroy();
@@ -130,7 +150,7 @@ export function Heading({
   return (
     <div ref={ref} className={`split-room ${className}`}>
       <p className="kicker">{kicker}</p>
-      <h2 className="display mt-3 text-[clamp(2.6rem,7vw,6.5rem)] leading-[0.92]">{children}</h2>
+      <h2 className="kinetic display mt-3 text-[clamp(2.6rem,7vw,6.5rem)] leading-[0.92]">{children}</h2>
     </div>
   );
 }
