@@ -26,7 +26,8 @@ export function Awards() {
           scale: 0.9 + i * 0.02,
           filter: "brightness(0.55)",
           ease: "none",
-          scrollTrigger: { trigger: cards[i + 1], start: "top bottom", end: "top 20%", scrub: true }
+          // Dim only while the next card is actually sliding over this one.
+          scrollTrigger: { trigger: cards[i + 1], start: "top 60%", end: "top 18%", scrub: true }
         });
       });
     },

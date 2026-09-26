@@ -24,7 +24,8 @@ const py = (lat: number) => ((62 - lat) / 50) * H;
 function arc(a: (typeof STOPS)[number], b: (typeof STOPS)[number]) {
   const [x1, y1, x2, y2] = [px(a.lon), py(a.lat), px(b.lon), py(b.lat)];
   const mx = (x1 + x2) / 2;
-  const my = Math.min(y1, y2) - Math.abs(x2 - x1) * 0.28 - 20;
+  // Arc upward, but never above the top edge of the map.
+  const my = Math.max(14, Math.min(y1, y2) - Math.abs(x2 - x1) * 0.28 - 20);
   return `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
 }
 
@@ -47,11 +48,10 @@ export function Education() {
         gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
       });
       gsap.set(pins.slice(1), { opacity: 0, scale: 0.4, transformOrigin: "center" });
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: ".route-map", start: "top 75%", end: "bottom 35%", scrub: 1 }
-      });
+      // Plays once when the map comes into view, stop by stop.
+      const tl = gsap.timeline({ scrollTrigger: { trigger: ".route-map", start: "top 70%", once: true } });
       paths.forEach((p, i) => {
-        tl.to(p, { strokeDashoffset: 0, duration: 1, ease: "none" }).to(
+        tl.to(p, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }).to(
           pins[i + 1],
           { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)" },
           "-=0.1"
