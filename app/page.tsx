@@ -32,7 +32,7 @@ export default function Home() {
         <Marquee speed={50} className="border-y border-white/[0.06] py-6">
           {FIELDS.map((f) => (
             <span key={f} className="flex items-center">
-              <span className="kinetic display px-8 text-5xl text-transparent [-webkit-text-stroke:1px_rgba(238,234,247,0.35)] sm:text-7xl">
+              <span className="display px-8 text-5xl text-transparent [-webkit-text-stroke:1px_rgba(238,234,247,0.35)] sm:text-7xl">
                 {f}
               </span>
               <span className="text-3xl text-violet">✦</span>

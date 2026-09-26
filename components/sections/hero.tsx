@@ -89,7 +89,7 @@ export function Hero() {
         </div>
 
         <div className="hero-name-wrap">
-          <h1 className="hero-name split-room kinetic display text-[clamp(4.2rem,15vw,15.5rem)] leading-[0.86] tracking-[-0.04em]">
+          <h1 className="hero-name split-room display text-[clamp(4.2rem,15vw,15.5rem)] leading-[0.86] tracking-[-0.04em]">
             Neşenaz
             <br />
             <span className="hero-grad text-violet-soft">Yalçın</span>

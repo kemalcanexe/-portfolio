@@ -59,7 +59,7 @@ export function Contact() {
         <p className="kicker">Contact</p>
         <a
           href={`mailto:${profile.email}`}
-          className="contact-big kinetic display mt-4 block break-all text-[clamp(2.2rem,8.2vw,9rem)] leading-[0.95] transition-colors hover:text-violet-soft"
+          className="contact-big display mt-4 block break-all text-[clamp(2.2rem,8.2vw,9rem)] leading-[0.95] transition-colors hover:text-violet-soft"
         >
           {profile.email}
         </a>
