@@ -1,43 +1,32 @@
 import type { Metadata, Viewport } from "next";
+import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
 import type React from "react";
+import { profile } from "@/content/cv";
 import "./globals.css";
 
+const sans = Schibsted_Grotesk({ subsets: ["latin", "latin-ext"], variable: "--font-sans", display: "swap" });
+const serif = Source_Serif_4({
+  subsets: ["latin", "latin-ext"],
+  style: ["italic"],
+  variable: "--font-serif",
+  display: "swap"
+});
+
 export const metadata: Metadata = {
-  title: "Neşenaz Yalçın | AI, Data Science, Systems & Software",
-  description:
-    "A signature portfolio for Neşenaz Yalçın: AI, data science, software engineering, research, and intelligent systems shaped with elegance, rigor, and real-world intent.",
-  keywords: [
-    "Neşenaz Yalçın",
-    "AI",
-    "Data Science",
-    "Software Engineering",
-    "Industrial AI",
-    "Research",
-    "Portfolio"
-  ],
-  authors: [{ name: "Neşenaz Yalçın" }],
-  openGraph: {
-    title: "Neşenaz Yalçın | AI, Data Science, Systems & Software",
-    description:
-      "AI, data science, software engineering, research, and intelligent systems for real-world impact.",
-    type: "website",
-    locale: "en_US",
-    siteName: "Neşenaz Yalçın Portfolio"
-  },
-  icons: {
-    icon: "/favicon.svg"
-  }
+  metadataBase: new URL("https://nesenaz.com"),
+  title: profile.name,
+  description: profile.summary,
+  authors: [{ name: profile.name }],
+  openGraph: { title: profile.name, description: profile.summary, type: "website", url: "https://nesenaz.com" },
+  icons: { icon: "/favicon.svg" }
 };
 
-export const viewport: Viewport = {
-  themeColor: "#050308",
-  colorScheme: "dark"
-};
+export const viewport: Viewport = { themeColor: "#F6F6F3" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-noir-980 text-white antialiased">{children}</body>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+      <body className="bg-paper font-sans text-ink">{children}</body>
     </html>
   );
 }

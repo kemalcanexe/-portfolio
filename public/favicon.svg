@@ -1,6 +1,1 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="8" fill="#050308"/>
-  <rect x="10" y="10" width="44" height="44" rx="8" stroke="#E0BFD0" stroke-opacity="0.52"/>
-  <path d="M18.5 44V19.5H24L39.7 35.7V19.5H45.2V44H40L24 27.6V44H18.5Z" fill="#F3E4D6"/>
-  <circle cx="48" cy="16" r="3" fill="#D8CEE7"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#3B1FA8"/><text x="16" y="22" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#F6F6F3" text-anchor="middle">NY</text></svg>
