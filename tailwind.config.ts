@@ -5,18 +5,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F6F6F3",
-        ink: "#17161C",
-        violet: { DEFAULT: "#3B1FA8", soft: "#8E7FD6", wash: "#ECE9F8" },
-        muted: "#6B6A73",
-        rule: "#DCDBE3",
-        mark: "#F4E76E"
+        night: { DEFAULT: "#07050D", 900: "#0C0916", 800: "#141024", 700: "#1E1836" },
+        fog: { DEFAULT: "#EEEAF7", dim: "#A7A1BC", faint: "#6E6887" },
+        violet: { DEFAULT: "#7C5CFF", deep: "#3A1FB8", soft: "#C6B5FF" },
+        orchid: "#FF6FD8",
+        amber: "#FFD27A",
+        mint: "#7CF2C8"
       },
       fontFamily: {
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"]
-      },
-      maxWidth: { measure: "68ch" }
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"]
+      }
     }
   },
   plugins: []

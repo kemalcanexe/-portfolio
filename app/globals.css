@@ -3,68 +3,162 @@
 @tailwind utilities;
 
 html {
-  background: #f6f6f3;
-  scroll-padding-top: 7rem;
+  background: #07050d;
+  color-scheme: dark;
 }
 
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 ::selection {
-  background: #f4e76e;
-  color: #17161c;
+  background: #7c5cff;
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid #3b1fa8;
+  outline: 2px solid #c6b5ff;
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
-mark {
-  background: linear-gradient(transparent 12%, #f4e76e 12%, #f4e76e 88%, transparent 88%);
-  color: inherit;
-  padding: 0 0.08em;
+/* Film grain over everything. Static on purpose: animated grain costs a full repaint per frame. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* One-time staggered entrance for the header. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(0.6rem);
+@layer components {
+  .glass {
+    @apply border border-white/[0.08] bg-white/[0.035] backdrop-blur-xl;
   }
-  to {
-    opacity: 1;
-    transform: none;
+  .display {
+    @apply font-display font-bold;
+    font-variation-settings: "wdth" 96, "opsz" 96;
+    letter-spacing: -0.025em;
+  }
+  .kicker {
+    @apply font-mono text-xs text-violet-soft;
   }
 }
-.rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
+
+/* SplitText masks clip at the line box; give descenders and cedillas room. */
+.split-room div {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
-/* Entry reached from a search result. */
-@keyframes arrive {
-  0%,
-  40% {
-    background-color: #ece9f8;
+/* Card that lights up where the pointer is. --x/--y are set from JS. */
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(198, 181, 255, 0.55), transparent 42%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: var(--glow, 0);
+  transition: opacity 0.4s;
+}
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(124, 92, 255, 0.12), transparent 45%);
+  opacity: var(--glow, 0);
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
   }
   100% {
-    background-color: transparent;
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes scrollcue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes bubble {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.flow {
+  stroke-dasharray: 4 6;
+  animation: flow 1.4s linear infinite;
+}
+
+@keyframes arrive {
+  0%,
+  35% {
+    box-shadow: 0 0 0 2px #c6b5ff, 0 0 60px rgba(124, 92, 255, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
   }
 }
 .arrive {
-  animation: arrive 1.6s ease-out;
+  animation: arrive 1.8s ease-out;
+}
+
+mark {
+  background: rgba(255, 210, 122, 0.9);
+  color: #07050d;
+  border-radius: 3px;
+  padding: 0 0.12em;
 }
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
