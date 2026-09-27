@@ -105,7 +105,7 @@ export const entries: Entry[] = [
     section: "publications",
     title: "Beyond Skewness: Confidence-Guided Rank Fusion for Text Retrieval",
     authors: "N. Yalçın, E. Teper, M. Keskin, M. Öztürk Umut, Y. H. Şahin",
-    venue: "International Conference on Machine Learning and Applications (ICMLA 2026), IEEE. Accepted.",
+    venue: "International Conference on Machine Learning and Applications (ICMLA 2026). Accepted.",
     bullets: [
       "Extends SkewFuse to heterogeneous text retrieval with per-query score normalization and Top-K Gap, Z-Score, Entropy and Hybrid confidence estimators, evaluated on ArguAna, NFCorpus and SciFact."
     ],

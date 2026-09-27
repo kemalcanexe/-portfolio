@@ -39,7 +39,7 @@ export function Publications() {
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-violet/20 px-3 py-1 font-mono text-xs text-violet-soft">
-                  {p.id.startsWith("icmla") ? "ICMLA 2026 · IEEE · Accepted" : "SIU 2026 · IEEE"}
+                  {p.id.startsWith("icmla") ? "ICMLA 2026 · Accepted" : "SIU 2026 · IEEE"}
                 </span>
               </div>
               <h3 className="display mt-5 text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.02]">{p.title}</h3>

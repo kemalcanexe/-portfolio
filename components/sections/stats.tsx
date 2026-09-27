@@ -5,7 +5,7 @@ import { gsap, prefersReducedMotion, useGlow, useGSAP } from "@/components/motio
 
 // Every figure is taken from the CV.
 const STATS = [
-  { value: 2, decimals: 0, suffix: "", label: "IEEE publications in 2026", note: "ICMLA and SIU" },
+  { value: 2, decimals: 0, suffix: "", label: "publications in 2026", note: "ICMLA 2026 and IEEE SIU 2026" },
   { value: 99.5, decimals: 1, suffix: "%", label: "exact-match accuracy", note: "fine-tuned Granite-350M, up from 17.0%" },
   { value: 3700, decimals: 0, suffix: "+", label: "operator commands", note: "synthetic dataset for MQTT tool calls" },
   { value: 5, decimals: 0, suffix: "", label: "countries", note: "Turkey, Italy, China, Netherlands, South Korea" },

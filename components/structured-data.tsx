@@ -31,7 +31,7 @@ export function StructuredData() {
     ),
     datePublished: "2026",
     description: p.venue,
-    publisher: { "@type": "Organization", name: "IEEE" },
+    ...(p.id === "siu-2026" ? { publisher: { "@type": "Organization", name: "IEEE" } } : {}),
     url: p.links?.[0]?.href.startsWith("/") ? `${SITE}${p.links[0].href}` : p.links?.[0]?.href
   }));
   const data = { "@context": "https://schema.org", "@graph": [person, ...articles] };
