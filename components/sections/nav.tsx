@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { openPalette } from "@/components/search/palette-store";
+import { useShortcutLabel } from "@/lib/platform";
 
 const LINKS = [
   { href: "#publications", label: "Publications" },
@@ -14,6 +15,7 @@ const LINKS = [
 
 // Floating nav: hides while scrolling down, returns on scroll up.
 export function Nav() {
+  const shortcut = useShortcutLabel();
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
 
@@ -69,7 +71,7 @@ export function Nav() {
             <path d="M13 13l4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
           </svg>
           <span>Search</span>
-          <kbd className="hidden font-mono text-[11px] text-fog-faint sm:inline">⌘K</kbd>
+          {shortcut && <kbd className="hidden font-mono text-[11px] text-fog-faint sm:inline">{shortcut}</kbd>}
         </button>
       </nav>
     </header>

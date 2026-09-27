@@ -7,6 +7,7 @@ import { corpusById, index, sectionLabel } from "@/lib/corpus";
 import { fold, stem } from "@/lib/search";
 import { lockScroll, revealEntry } from "@/components/motion/engine";
 import { onPalette } from "@/components/search/palette-store";
+import { usePlatform } from "@/lib/platform";
 
 const SUGGESTIONS = ["rank fusion", "mqtt", "earthquake", "simulaton", "llm", "seoul"];
 const MAX = 8;
@@ -50,6 +51,7 @@ function snippet(lines: string[], terms: string[]) {
 }
 
 export function CommandPalette() {
+  const platform = usePlatform();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [cursor, setCursor] = useState(0);
@@ -144,7 +146,13 @@ export function CommandPalette() {
                 spellCheck={false}
                 className="w-full bg-transparent text-lg outline-none placeholder:text-fog-faint focus-visible:outline-none"
               />
-              <kbd className="rounded-md border border-white/15 px-1.5 font-mono text-xs text-fog-faint">esc</kbd>
+              {platform === "mobile" ? (
+                <button type="button" onClick={() => setOpen(false)} className="text-sm text-fog-dim">
+                  Close
+                </button>
+              ) : (
+                <kbd className="rounded-md border border-white/15 px-1.5 font-mono text-xs text-fog-faint">esc</kbd>
+              )}
             </div>
 
             {!query.trim() ? (

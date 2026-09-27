@@ -7,6 +7,8 @@ import { gsap, prefersReducedMotion, SplitText, useGSAP } from "@/components/mot
 import { HeroSearchDemo } from "@/components/search/hero-search-demo";
 import { openPalette } from "@/components/search/palette-store";
 import { whenIntroDone } from "@/components/intro/intro-store";
+import { useShortcutLabel } from "@/lib/platform";
+import { TiltFluid } from "@/components/fx/tilt-fluid";
 
 const LiquidEther = dynamic(() => import("@/components/fx/liquid-ether"), { ssr: false });
 
@@ -14,6 +16,7 @@ const FIELDS = ["Information retrieval", "Edge AI", "Humanitarian logistics"];
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const shortcut = useShortcutLabel();
 
   useGSAP(
     () => {
@@ -82,6 +85,7 @@ export function Hero() {
             Fulbright Principal Candidate, 2026–2027
           </span>
           <span className="glass rounded-full px-4 py-2 text-sm text-fog-dim">{profile.location}</span>
+          <TiltFluid target={root} />
         </div>
 
         <div className="hero-in absolute right-10 top-[24%] hidden xl:block">
@@ -140,7 +144,9 @@ export function Hero() {
               className="glass flex items-center gap-3 rounded-full px-5 py-3.5 font-semibold transition-colors hover:bg-white/10"
             >
               Search my work
-              <kbd className="rounded-md border border-white/15 px-1.5 font-mono text-xs text-fog-dim">⌘K</kbd>
+              {shortcut && (
+                <kbd className="rounded-md border border-white/15 px-1.5 font-mono text-xs text-fog-dim">{shortcut}</kbd>
+              )}
             </button>
           </div>
         </div>

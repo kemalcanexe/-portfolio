@@ -5,12 +5,14 @@ import { useEffect, useMemo, useState } from "react";
 import { corpusById, index, sectionLabel } from "@/lib/corpus";
 import { prefersReducedMotion } from "@/components/motion/engine";
 import { openPalette } from "@/components/search/palette-store";
+import { useShortcutLabel } from "@/lib/platform";
 
 // The real search index, typing to itself: each query is typed out and the
 // live fused ranking appears underneath.
 const QUERIES = ["rank fusion", "mqtt edge", "earthquake", "simulaton"];
 
 export function HeroSearchDemo() {
+  const shortcut = useShortcutLabel();
   const [qi, setQi] = useState(0);
   const [typed, setTyped] = useState(QUERIES[0]);
 
@@ -94,7 +96,7 @@ export function HeroSearchDemo() {
           bm25 <i className="mx-1 ml-2 inline-block h-1.5 w-1.5 rounded-full bg-orchid" />
           trigram
         </span>
-        <span className="text-fog-dim group-hover:text-fog">⌘K to search</span>
+        <span className="text-fog-dim group-hover:text-fog">{shortcut ? `${shortcut} to search` : "Click to search"}</span>
       </p>
     </button>
   );
